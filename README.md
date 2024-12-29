@@ -26,11 +26,13 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
   - Fetch all accounts and their details.
   - Retrieve the balance of a specific account.
 - Transaction management:
-  - Deposit funds into an account.
-  - Withdraw funds with validation for account type and available balance.
-  - Transfer funds between accounts.
+  - Deposit funds into an account in multiple currencies.
+  - Withdraw funds with validation for account type, available balance, and currency.
+  - Transfer funds between accounts, handling currency conversion where applicable.
   - Storing each transaction in the database.
 - Interest calculation over time, based on the balance.
+- Validation for account type and available balance.
+- Support for multiple currencies (USD, GBP, EUR, CHF, JPY, AED, SAR, JOD, CAD), with automatic currency conversion.
 - Automatic database migrations.
 - Comprehensive API documentation.
 
@@ -59,50 +61,42 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
 
 1. Clone the repository:
 
-   bash
-```
-  git clone https://github.com/Yassin9323/PaySky.git
-  cd BankingSystem
-```
-
+   ```bash
+   git clone https://github.com/Yassin9323/PaySky.git
+   cd BankingSystem
+   ```
 
 2. Install dependencies:
 
-   bash
-   ```
+   ```bash
    dotnet restore
    ```
 
-4. Apply database migrations:
+3. Apply database migrations:
 
-   bash
-   ```
+   ```bash
    dotnet ef database update
    ```
 
-6. Run the project:
+4. Run the project:
 
-   bash
-   ```
+   ```bash
    dotnet run
    ```
 
-8. Access the API documentation at:
+5. Access the API documentation at:
 
-   
-   http://localhost:5122/swagger/index.html
-   
+   [http://localhost:5122/swagger/index.html](http://localhost:5122/swagger/index.html)
 
 ---
 
 ## API Documentation
 
-## You can use it from http://localhost:5122/swagger/index.html
+## You can use it from [http://localhost:5122/swagger/index.html](http://localhost:5122/swagger/index.html)
 
 ### Base URL
 
-http://localhost:5122/api/accounts
-
+[http://localhost:5122/api/accounts](http://localhost:5122/api/accounts)
 
 ### Endpoints
 
@@ -115,17 +109,17 @@ http://localhost:5122/api/accounts
   {
     "number_Of_Accounts": 2,
     "data": [
-        {
-            "accountNumber": "923141323",
-            "accountType": "CheckingAccount",
-            "balance": 4000.0
-        },
-        {
-            "accountNumber": "769241323",
-            "accountType": "SavingsAccount",
-            "balance": 3899.316
-        }
-  ]
+      {
+        "accountNumber": "923141323",
+        "accountType": "CheckingAccount",
+        "balance": 4000.0
+      },
+      {
+        "accountNumber": "769241323",
+        "accountType": "SavingsAccount",
+        "balance": 3899.316
+      }
+    ]
   }
   ```
 
@@ -142,12 +136,12 @@ http://localhost:5122/api/accounts
 - **Response**:
   ```json
   {
-      "result": "Successful Operation",
-      "data": {
-          "accountNumber": "824435905",
-          "accountType": "SavingsAccount",
-          "balance": 0
-      }
+    "result": "Successful Operation",
+    "data": {
+      "accountNumber": "824435905",
+      "accountType": "SavingsAccount",
+      "balance": 0
+    }
   }
   ```
 
@@ -175,7 +169,8 @@ http://localhost:5122/api/accounts
   ```json
   {
     "AccountNumber": "123456789",
-    "Balance": 500.0
+    "Balance": 500.0,
+    "Currency": "USD"
   }
   ```
 - **Response**:
@@ -183,9 +178,10 @@ http://localhost:5122/api/accounts
   {
     "result": "Successful Operation",
     "data": {
-        "transactionType": "Deposit",
-        "amount": 1000.00,
-        "transactionTime": "2024-12-29T02:53:42.6166238+02:00"
+      "transactionType": "Deposit",
+      "amount": 500.0,
+      "currency": "USD",
+      "transactionTime": "2024-12-29T02:53:42.6166238+02:00"
     }
   }
   ```
@@ -198,7 +194,8 @@ http://localhost:5122/api/accounts
   ```json
   {
     "AccountNumber": "123456789",
-    "Balance": 200.0
+    "Balance": 200.0,
+    "Currency": "EUR"
   }
   ```
 - **Response**:
@@ -206,9 +203,10 @@ http://localhost:5122/api/accounts
   {
     "result": "Successful Operation",
     "data": {
-        "transactionType": "Withdrawal",
-        "amount": 400,
-        "transactionTime": "2024-12-29T02:54:38.2445197+02:00"
+      "transactionType": "Withdrawal",
+      "amount": 200.0,
+      "currency": "EUR",
+      "transactionTime": "2024-12-29T02:54:38.2445197+02:00"
     }
   }
   ```
@@ -222,18 +220,20 @@ http://localhost:5122/api/accounts
   {
     "SenderAccount": "123456789",
     "ReceiverAccount": "987654321",
-    "Balance": 100.0
+    "Balance": 100.0,
+    "Currency": "GBP"
   }
   ```
 - **Response**:
   ```json
   {
-      "result": "Successful Operation",
-      "data": {
-          "transactionType": "Transfer",
-          "amount": 500.000,
-          "transactionTime": "2024-12-29T02:56:43.8844542+02:00"
-      }
+    "result": "Successful Operation",
+    "data": {
+      "transactionType": "Transfer",
+      "amount": 100.0,
+      "currency": "GBP",
+      "transactionTime": "2024-12-29T02:56:43.8844542+02:00"
+    }
   }
   ```
 
@@ -249,6 +249,7 @@ http://localhost:5122/api/accounts
    - `AccountNumber`: Unique 9-digit number
    - `AccountType`: Type of account (e.g., Savings, Checking)
    - `Balance`: Current balance
+   - `Currency`: Default currency for the account
    - `CreatedAt`: Date the account was created
 
 2. **Transactions**:
@@ -257,6 +258,7 @@ http://localhost:5122/api/accounts
    - `AccountId`: Foreign Key to `Accounts`
    - `TransactionType`: Deposit, Withdrawal, or Transfer
    - `Amount`: Amount of the transaction
+   - `Currency`: Currency used in the transaction
    - `TransactionDate`: Date of the transaction
    - `TransferredTo`: For transfers, the target account number
 
@@ -265,5 +267,3 @@ http://localhost:5122/api/accounts
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
-
-
