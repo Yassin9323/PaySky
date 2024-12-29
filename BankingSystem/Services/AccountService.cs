@@ -4,6 +4,7 @@ using BankingSystem.Dtos;
 using BankingSystem.Entities;
 using Microsoft.EntityFrameworkCore;
 
+/// <summary> Using Interface to handel accounts operation </summary>
 public class AccountService : IAccountService
 {
     private readonly BankingSystemContext _dbContext;
@@ -16,20 +17,21 @@ public class AccountService : IAccountService
         return random.Next(100000000, 999999999).ToString(); // Generates a 9-digit number
     }
 
+    /// <summary> For using DB and AutoMapper </summary>
     public AccountService(BankingSystemContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext;
         _mapper = mapper;
     }
 
-//Get all accounts
+/// <summary>Retrieves all accounts in the system.</summary>
     public async Task<IEnumerable<AccountsDto>> GetAllAccountsAsync()
     {
         var accounts = await _dbContext.Accounts.AsNoTracking().ToListAsync();
         return _mapper.Map<IEnumerable<AccountsDto>>(accounts);
     }
 
-//Get account's balance
+/// <summary>Gets the balance of a specific account.</summary>
     public async Task<BalanceDto?> GetAccountBalanceAsync(int accountId)
     {
         var account = await _dbContext.Accounts.FindAsync(accountId);
@@ -38,7 +40,7 @@ public class AccountService : IAccountService
         return _mapper.Map<BalanceDto>(account);
     }
 
-// Create account
+/// <summary>Creates a new account with a unique 9-digit number.</summary>
     public async Task<CreateAccountDto> CreateAccountAsync(CreateAccountDto accountDto)
     {
         // Generate a unique 9-digit account number
@@ -62,7 +64,7 @@ public class AccountService : IAccountService
         return _mapper.Map<CreateAccountDto>(newAccount);
     }
 
-// Deposit operation
+/// <summary>Makes a deposit into an account.</summary>
     public async Task<TransactionDto> MakeDepositAsync(DepositDto depositDto)
     {
         // Get the Customer's account by his account number
@@ -72,6 +74,28 @@ public class AccountService : IAccountService
         if (account == null) throw new Exception("Account not found.");
         if (depositDto.Balance <= 0) throw new Exception("Deposit amount must be greater than zero.");
         
+        // Fixed annual interest rate
+        const decimal fixedInterestRate = 0.18m; // 18%
+
+        // Calculate interest if the account is a SavingsAccount
+        if (account.AccountType == "SavingsAccount")
+        {
+            var now = DateTime.Now;
+            if (account.LastInterestCalculated.HasValue)
+            {
+                // Calculate elapsed time in years since the last interest calculation
+                var elapsedTime = (now - account.LastInterestCalculated.Value).TotalDays / 365;
+                if (elapsedTime > 0)
+                {
+                    // Apply interest to the balance using the fixed rate
+                    var interest = account.Balance * fixedInterestRate * (decimal)elapsedTime;
+                    account.Balance += interest;
+                }
+            }
+
+            // Update LastInterestCalculated to now
+            account.LastInterestCalculated = now;
+        }
         // Balance operation
         account.Balance += depositDto.Balance;
         
@@ -87,12 +111,12 @@ public class AccountService : IAccountService
 
         _dbContext.Transactions.Add(transaction);
         await _dbContext.SaveChangesAsync();
-        
+
         // return Dto to send it to the customer
-        return _mapper.Map<TransactionDto>(transaction);
+        return  _mapper.Map<TransactionDto>(transaction);
     }
 
-// Withdrawal operation
+/// <summary>Makes a withdrawal from an account.</summary>
     public async Task<TransactionDto> MakeWithdrawalAsync(WithdrawalDto withdrawalDto)
     {
         // Get the Customer's account by his account number
@@ -128,7 +152,7 @@ public class AccountService : IAccountService
         return _mapper.Map<TransactionDto>(transaction);
     }
 
-// Transfer operation
+/// <summary>Transfers funds between two accounts.</summary>
     public async Task<TransactionDto> TransferAsync(TransferDto transferDto)
     {
         // Get the 2 accounts by the account number

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingSystem.Migrations
 {
     [DbContext(typeof(BankingSystemContext))]
-    [Migration("20241228153504_relation")]
-    partial class relation
+    [Migration("20241229153051_RemoveInterestRate")]
+    partial class RemoveInterestRate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,10 +37,10 @@ namespace BankingSystem.Migrations
                     b.Property<decimal>("Balance")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("BalanceWithInterest")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("LastInterestCalculated")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -60,15 +60,15 @@ namespace BankingSystem.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("TransactionDate")
+                    b.Property<DateTime>("TransactionTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("TransactionType")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TransferredTo")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("TransferredTo")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

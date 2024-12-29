@@ -3,9 +3,20 @@ dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet tool install --global dotnet-ef
 dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection
+dotnet add package Swashbuckle.AspNetCore
+
 
 
 sudo apt install sqlite3
 
 dotnet ef migrations add InitialCreate
 dotnet ef database update
+
+
+// // // Tasks // // //
+
+Enhance Transaction Time output ----- DONE
+
+Interest Calculation ------ Done
+
+Swagger for API documentation ---- Done

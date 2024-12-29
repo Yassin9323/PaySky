@@ -1,0 +1,270 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BankingSystem</name>
+    </assembly>
+    <members>
+        <member name="T:BankingSystem.Data.BankingSystemContext">
+            <summary> Represents the context of the banking system, including the accounts and transactions.</summary>
+        </member>
+        <member name="M:BankingSystem.Data.BankingSystemContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{BankingSystem.Data.BankingSystemContext})">
+            <summary> /// Initializes a new instance of the <see cref="T:BankingSystem.Data.BankingSystemContext"/> class. </summary>
+            <param name="options">The options to configure the context.</param>
+        </member>
+        <member name="P:BankingSystem.Data.BankingSystemContext.Accounts">
+            <summary> Gets or sets the accounts in the banking system. </summary>
+        </member>
+        <member name="P:BankingSystem.Data.BankingSystemContext.Transactions">
+            <summary>  Gets or sets the transactions in the banking system. </summary>
+        </member>
+        <member name="M:BankingSystem.Data.BankingSystemContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary> Configures the model for the banking system, including relationships and constraints. </summary>
+            <param name="modelBuilder">The model builder used to configure the model.</param>
+        </member>
+        <member name="T:BankingSystem.Data.DataExtensions">
+            <summary> Provides extension methods for data operations in the banking system. </summary>
+        </member>
+        <member name="M:BankingSystem.Data.DataExtensions.MigrateDbAsync(Microsoft.AspNetCore.Builder.WebApplication)">
+            <summary> Applies database migrations for the given web application.</summary>
+            <param name="app">The web application to apply migrations to.</param>
+        </member>
+        <member name="T:BankingSystem.Dtos.AccountsDto">
+            <summary>Data transfer object for get all accounts.</summary>
+        </member>
+        <member name="M:BankingSystem.Dtos.AccountsDto.#ctor(System.String,System.String,System.Decimal)">
+            <summary>Data transfer object for get all accounts.</summary>
+        </member>
+        <member name="T:BankingSystem.Dtos.BalanceDto">
+            <summary>Data transfer object for get the balance of account.</summary>
+        </member>
+        <member name="M:BankingSystem.Dtos.BalanceDto.#ctor(System.String,System.String,System.Decimal)">
+            <summary>Data transfer object for get the balance of account.</summary>
+        </member>
+        <member name="T:BankingSystem.Dtos.CreateAccountDto">
+            <summary>Data transfer object for creating a new account.</summary>
+        </member>
+        <member name="M:BankingSystem.Dtos.CreateAccountDto.#ctor(System.String,System.String,System.Decimal)">
+            <summary>Data transfer object for creating a new account.</summary>
+        </member>
+        <member name="T:BankingSystem.Dtos.DepositDto">
+            <summary>Data transfer object for depositing operation.</summary>
+        </member>
+        <member name="M:BankingSystem.Dtos.DepositDto.#ctor(System.String,System.String,System.Decimal)">
+            <summary>Data transfer object for depositing operation.</summary>
+        </member>
+        <member name="T:BankingSystem.Dtos.TransactionDto">
+            <summary>Data transfer object for transactions.</summary>
+        </member>
+        <member name="M:BankingSystem.Dtos.TransactionDto.#ctor(System.String,System.Decimal,System.String)">
+            <summary>Data transfer object for transactions.</summary>
+        </member>
+        <member name="T:BankingSystem.Dtos.TransferDto">
+            <summary>Data transfer object for transfering operation.</summary>
+        </member>
+        <member name="M:BankingSystem.Dtos.TransferDto.#ctor(System.String,System.String,System.Decimal)">
+            <summary>Data transfer object for transfering operation.</summary>
+        </member>
+        <member name="T:BankingSystem.Dtos.WithdrawalDto">
+            <summary>Data transfer object for withdrawling operation.</summary>
+        </member>
+        <member name="M:BankingSystem.Dtos.WithdrawalDto.#ctor(System.String,System.String,System.Decimal)">
+            <summary>Data transfer object for withdrawling operation.</summary>
+        </member>
+        <member name="T:BankingSystem.Endpoints.AccountsEndpoints">
+            <summary>Defines API endpoints for managing accounts and transactions.</summary>
+        </member>
+        <member name="M:BankingSystem.Endpoints.AccountsEndpoints.MapAccountsEndpoints(Microsoft.AspNetCore.Builder.WebApplication)">
+            <summary>Maps all account-related endpoints to the web application.</summary>
+            <param name="app">The web application instance.</param>
+            <returns>A route group builder with mapped endpoints.</returns>
+        </member>
+        <member name="T:BankingSystem.Entities.Account">
+            <summary>Represents a bank account entity.</summary>
+        </member>
+        <member name="P:BankingSystem.Entities.Account.Id">
+            <summary>Gets or sets the unique identifier of the account.</summary>
+        </member>
+        <member name="P:BankingSystem.Entities.Account.AccountNumber">
+            <summary>Gets or sets the unique 9-digit account number.</summary>
+        </member>
+        <member name="P:BankingSystem.Entities.Account.AccountType">
+            <summary>Gets or sets the type of the account (e.g., SavingsAccount, CheckingAccount).</summary>
+        </member>
+        <member name="P:BankingSystem.Entities.Account.Balance">
+            <summary>Gets or sets the current balance of the account.</summary>
+        </member>
+        <member name="P:BankingSystem.Entities.Account.LastInterestCalculated">
+            <summary>Tracks the last date interest was calculated for the account.</summary>
+        </member>
+        <member name="P:BankingSystem.Entities.Account.CreatedAt">
+            <summary>Gets or sets the creation date of the account.</summary>
+        </member>
+        <member name="P:BankingSystem.Entities.Account.Transactions">
+            <summary>Gets or sets the collection of related transactions.</summary>
+        </member>
+        <member name="T:BankingSystem.Entities.Transaction">
+            <summary>Represents a transaction associated with a bank account.</summary>
+        </member>
+        <member name="P:BankingSystem.Entities.Transaction.Id">
+            <summary>Gets or sets the unique identifier of the transaction.</summary>
+        </member>
+        <member name="P:BankingSystem.Entities.Transaction.AccountId">
+            <summary>Gets or sets the ID of the associated account.</summary>
+        </member>
+        <member name="P:BankingSystem.Entities.Transaction.TransactionType">
+            <summary>Gets or sets the type of the transaction (e.g., Deposit, Withdrawal, Transfer).</summary>
+        </member>
+        <member name="P:BankingSystem.Entities.Transaction.Amount">
+            <summary>Gets or sets the transaction amount.</summary>
+        </member>
+        <member name="P:BankingSystem.Entities.Transaction.TransactionTime">
+            <summary>Gets or sets the timestamp of the transaction.</summary>
+        </member>
+        <member name="P:BankingSystem.Entities.Transaction.TransferredTo">
+            <summary>Gets or sets the ID of the account this transaction was transferred to, if applicable.</summary>
+        </member>
+        <member name="P:BankingSystem.Entities.Transaction.Account">
+            <summary>Gets or sets the related account for this transaction.</summary>
+        </member>
+        <member name="T:BankingSystem.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BankingSystem.Migrations.accountTypes">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.accountTypes.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.accountTypes.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.accountTypes.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BankingSystem.Migrations.Relation">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.Relation.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.Relation.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.Relation.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BankingSystem.Migrations.Types">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.Types.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.Types.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.Types.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BankingSystem.Migrations.Transactions">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.Transactions.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.Transactions.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.Transactions.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BankingSystem.Migrations.AddInterestColumns">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.AddInterestColumns.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.AddInterestColumns.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.AddInterestColumns.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BankingSystem.Migrations.RemoveInterestRate">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.RemoveInterestRate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.RemoveInterestRate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.RemoveInterestRate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:MappingProfile">
+            <summary>Defines mapping configurations for DTOs and entities.</summary>
+        </member>
+        <member name="M:MappingProfile.#ctor">
+            <summary>Initializes mappings between entities and DTOs.</summary>
+        </member>
+        <member name="T:AccountService">
+            <summary> Using Interface to handel accounts operation </summary>
+        </member>
+        <member name="M:AccountService.#ctor(BankingSystem.Data.BankingSystemContext,AutoMapper.IMapper)">
+            <summary> For using DB and AutoMapper </summary>
+        </member>
+        <member name="M:AccountService.GetAllAccountsAsync">
+            <summary>Retrieves all accounts in the system.</summary>
+        </member>
+        <member name="M:AccountService.GetAccountBalanceAsync(System.Int32)">
+            <summary>Gets the balance of a specific account.</summary>
+        </member>
+        <member name="M:AccountService.CreateAccountAsync(BankingSystem.Dtos.CreateAccountDto)">
+            <summary>Creates a new account with a unique 9-digit number.</summary>
+        </member>
+        <member name="M:AccountService.MakeDepositAsync(BankingSystem.Dtos.DepositDto)">
+            <summary>Makes a deposit into an account.</summary>
+        </member>
+        <member name="M:AccountService.MakeWithdrawalAsync(BankingSystem.Dtos.WithdrawalDto)">
+            <summary>Makes a withdrawal from an account.</summary>
+        </member>
+        <member name="M:AccountService.TransferAsync(BankingSystem.Dtos.TransferDto)">
+            <summary>Transfers funds between two accounts.</summary>
+        </member>
+        <member name="T:IAccountService">
+            <summary>Interface for separation the bussiness logic and endpoints for several reasons.</summary>
+        </member>
+        <member name="M:IAccountService.GetAllAccountsAsync">
+            <summary>Retrieves all accounts in the system.</summary>
+        </member>
+        <member name="M:IAccountService.GetAccountBalanceAsync(System.Int32)">
+            <summary>Retrieves the balance of a specific account.</summary>
+            <param name="accountId">The ID of the account.</param>
+        </member>
+        <member name="M:IAccountService.CreateAccountAsync(BankingSystem.Dtos.CreateAccountDto)">
+            <summary>Creates a new account with the provided details.</summary>
+            <param name="accountDto">The account details to create.</param>
+        </member>
+        <member name="M:IAccountService.MakeDepositAsync(BankingSystem.Dtos.DepositDto)">
+            <summary>Deposits money into an account.</summary>
+            <param name="depositDto">The deposit details.</param>
+        </member>
+        <member name="M:IAccountService.MakeWithdrawalAsync(BankingSystem.Dtos.WithdrawalDto)">
+            <summary>Withdraws money from an account.</summary>
+            <param name="withdrawalDto">The withdrawal details.</param>
+        </member>
+        <member name="M:IAccountService.TransferAsync(BankingSystem.Dtos.TransferDto)">
+            <summary>Transfers funds between two accounts.</summary>
+            <param name="transferDto">The transfer details.</param>
+        </member>
+    </members>
+</doc>

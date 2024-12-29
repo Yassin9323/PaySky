@@ -1,8 +1,14 @@
 using BankingSystem.Dtos;
 
 namespace BankingSystem.Endpoints;
+
+/// <summary>Defines API endpoints for managing accounts and transactions.</summary>
 public static class AccountsEndpoints
 {
+
+     /// <summary>Maps all account-related endpoints to the web application.</summary>
+    /// <param name="app">The web application instance.</param>
+    /// <returns>A route group builder with mapped endpoints.</returns>
     public static RouteGroupBuilder MapAccountsEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("/api/accounts");
