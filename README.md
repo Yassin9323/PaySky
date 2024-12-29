@@ -108,18 +108,17 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
   ```json
   {
     "number_Of_Accounts": 2,
-    "data": [
-      {
-        "accountNumber": "923141323",
-        "accountType": "CheckingAccount",
-        "balance": 4000.0
-      },
-      {
-        "accountNumber": "769241323",
-        "accountType": "SavingsAccount",
-        "balance": 3899.316
-      }
-    ]
+   "data": [
+        {
+            "accountNumber": "923141323",
+            "accountType": "CheckingAccount",
+            "_Balance": "$5,500.00"
+        },
+        {
+            "accountNumber": "769241323",
+            "accountType": "SavingsAccount",
+            "_Balance": "$3,899.32"
+        },
   }
   ```
 
@@ -138,9 +137,9 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
   {
     "result": "Successful Operation",
     "data": {
-      "accountNumber": "824435905",
-      "accountType": "SavingsAccount",
-      "balance": 0
+        "accountNumber": "378506558",
+        "accountType": "SavingsAccount",
+        "_Balance": "$0.00"
     }
   }
   ```
@@ -152,11 +151,11 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
 - **Response**:
   ```json
   {
-    "Result": "Successful Operation",
-    "Data": {
-      "AccountNumber": "123456789",
-      "AccountType": "SavingsAccount",
-      "Balance": 1000.5
+    "result": "Successful Operation",
+    "data": {
+        "accountNumber": "231682773",
+        "accountType": "SavingsAccount",
+        "_Balance": "$2,736.00"
     }
   }
   ```
@@ -168,9 +167,9 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
 - **Request Body**:
   ```json
   {
-    "AccountNumber": "123456789",
-    "Balance": 500.0,
-    "Currency": "USD"
+  	"AccountNumber": "231682773",
+      "Balance": 1000.00,
+      "Currency": "GBP"
   }
   ```
 - **Response**:
@@ -178,10 +177,10 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
   {
     "result": "Successful Operation",
     "data": {
-      "transactionType": "Deposit",
-      "amount": 500.0,
-      "currency": "USD",
-      "transactionTime": "2024-12-29T02:53:42.6166238+02:00"
+        "transactionType": "Deposit",
+        "_Amount": "£1,000.00",
+        "currency": "GBP",
+        "transactionTime": "12/29/2024 9:41:03 PM"
     }
   }
   ```
@@ -192,22 +191,22 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
 
 - **Request Body**:
   ```json
-  {
-    "AccountNumber": "123456789",
-    "Balance": 200.0,
-    "Currency": "EUR"
+   {
+  	"AccountNumber": "231682773",
+      "Balance": 100,
+      "Currency": "GBP"
   }
   ```
 - **Response**:
   ```json
-  {
-    "result": "Successful Operation",
-    "data": {
-      "transactionType": "Withdrawal",
-      "amount": 200.0,
-      "currency": "EUR",
-      "transactionTime": "2024-12-29T02:54:38.2445197+02:00"
-    }
+   {
+      "result": "Successful Operation",
+      "data": {
+          "transactionType": "Withdrawal",
+          "_Amount": "£100.00",
+          "currency": "GBP",
+          "transactionTime": "12/29/2024 9:43:48 PM"
+      }
   }
   ```
 
@@ -218,9 +217,9 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
 - **Request Body**:
   ```json
   {
-    "SenderAccount": "123456789",
-    "ReceiverAccount": "987654321",
-    "Balance": 100.0,
+	"senderAccount": "231682773",
+    "receiverAccount": "378506558",
+    "Balance": 300.000,
     "Currency": "GBP"
   }
   ```
@@ -229,10 +228,10 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
   {
     "result": "Successful Operation",
     "data": {
-      "transactionType": "Transfer",
-      "amount": 100.0,
-      "currency": "GBP",
-      "transactionTime": "2024-12-29T02:56:43.8844542+02:00"
+        "transactionType": "Transfer",
+        "_Amount": "£300.00",
+        "currency": "GBP",
+        "transactionTime": "12/29/2024 9:54:16 PM"
     }
   }
   ```
@@ -251,6 +250,7 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
    - `Balance`: Current balance
    - `Currency`: Default currency for the account
    - `CreatedAt`: Date the account was created
+   - `LastInterestCalculated`: Date the last interest calculated was created
 
 2. **Transactions**:
 
