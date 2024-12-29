@@ -7,7 +7,7 @@ public record class BalanceDto
 (
 [Required][StringLength(9)] string AccountNumber,
 string AccountType,
-[Required] decimal Balance
+string _Balance
 
 );
  

@@ -5,8 +5,12 @@ namespace BankingSystem.Dtos;
 /// <summary>Data transfer object for depositing operation.</summary>
 public record class DepositDto
 (
+    
 [Required][StringLength(9)] string AccountNumber,
-string AccountType,
-[Required] decimal Balance
+
+[Required] decimal Balance,
+
+[Required] string Currency
+
 );
  

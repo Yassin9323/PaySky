@@ -17,6 +17,9 @@ public class Transaction
     /// <summary>Gets or sets the transaction amount.</summary>
     public decimal Amount { get; set; }
 
+    /// <summary>Gets or sets the amount's currency.</summary>
+    public string Currency { get; set; }
+
     /// <summary>Gets or sets the timestamp of the transaction.</summary>
     public DateTime TransactionTime { get; set; }
 

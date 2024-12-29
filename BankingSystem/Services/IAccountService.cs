@@ -8,11 +8,11 @@ public interface IAccountService
 
     /// <summary>Retrieves the balance of a specific account.</summary>
     /// <param name="accountId">The ID of the account.</param>
-    Task<BalanceDto?> GetAccountBalanceAsync(int accountId);
+    Task<AccountsDto?> GetAccountBalanceAsync(int accountId);
 
     /// <summary>Creates a new account with the provided details.</summary>
     /// <param name="accountDto">The account details to create.</param>
-    Task<CreateAccountDto> CreateAccountAsync(CreateAccountDto accountDto);
+    Task<AccountsDto> CreateAccountAsync(CreateAccountDto accountDto);
 
     /// <summary>Deposits money into an account.</summary>
     /// <param name="depositDto">The deposit details.</param>

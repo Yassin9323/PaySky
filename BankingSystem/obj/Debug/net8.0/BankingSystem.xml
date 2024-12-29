@@ -31,43 +31,43 @@
         <member name="T:BankingSystem.Dtos.AccountsDto">
             <summary>Data transfer object for get all accounts.</summary>
         </member>
-        <member name="M:BankingSystem.Dtos.AccountsDto.#ctor(System.String,System.String,System.Decimal)">
+        <member name="M:BankingSystem.Dtos.AccountsDto.#ctor(System.String,System.String,System.String)">
             <summary>Data transfer object for get all accounts.</summary>
         </member>
         <member name="T:BankingSystem.Dtos.BalanceDto">
             <summary>Data transfer object for get the balance of account.</summary>
         </member>
-        <member name="M:BankingSystem.Dtos.BalanceDto.#ctor(System.String,System.String,System.Decimal)">
+        <member name="M:BankingSystem.Dtos.BalanceDto.#ctor(System.String,System.String,System.String)">
             <summary>Data transfer object for get the balance of account.</summary>
         </member>
         <member name="T:BankingSystem.Dtos.CreateAccountDto">
             <summary>Data transfer object for creating a new account.</summary>
         </member>
-        <member name="M:BankingSystem.Dtos.CreateAccountDto.#ctor(System.String,System.String,System.Decimal)">
+        <member name="M:BankingSystem.Dtos.CreateAccountDto.#ctor(System.String,System.String)">
             <summary>Data transfer object for creating a new account.</summary>
         </member>
         <member name="T:BankingSystem.Dtos.DepositDto">
             <summary>Data transfer object for depositing operation.</summary>
         </member>
-        <member name="M:BankingSystem.Dtos.DepositDto.#ctor(System.String,System.String,System.Decimal)">
+        <member name="M:BankingSystem.Dtos.DepositDto.#ctor(System.String,System.Decimal,System.String)">
             <summary>Data transfer object for depositing operation.</summary>
         </member>
         <member name="T:BankingSystem.Dtos.TransactionDto">
             <summary>Data transfer object for transactions.</summary>
         </member>
-        <member name="M:BankingSystem.Dtos.TransactionDto.#ctor(System.String,System.Decimal,System.String)">
+        <member name="M:BankingSystem.Dtos.TransactionDto.#ctor(System.String,System.String,System.String,System.String)">
             <summary>Data transfer object for transactions.</summary>
         </member>
         <member name="T:BankingSystem.Dtos.TransferDto">
             <summary>Data transfer object for transfering operation.</summary>
         </member>
-        <member name="M:BankingSystem.Dtos.TransferDto.#ctor(System.String,System.String,System.Decimal)">
+        <member name="M:BankingSystem.Dtos.TransferDto.#ctor(System.String,System.String,System.Decimal,System.String)">
             <summary>Data transfer object for transfering operation.</summary>
         </member>
         <member name="T:BankingSystem.Dtos.WithdrawalDto">
             <summary>Data transfer object for withdrawling operation.</summary>
         </member>
-        <member name="M:BankingSystem.Dtos.WithdrawalDto.#ctor(System.String,System.String,System.Decimal)">
+        <member name="M:BankingSystem.Dtos.WithdrawalDto.#ctor(System.String,System.Decimal,System.String)">
             <summary>Data transfer object for withdrawling operation.</summary>
         </member>
         <member name="T:BankingSystem.Endpoints.AccountsEndpoints">
@@ -116,6 +116,9 @@
         </member>
         <member name="P:BankingSystem.Entities.Transaction.Amount">
             <summary>Gets or sets the transaction amount.</summary>
+        </member>
+        <member name="P:BankingSystem.Entities.Transaction.Currency">
+            <summary>Gets or sets the amount's currency.</summary>
         </member>
         <member name="P:BankingSystem.Entities.Transaction.TransactionTime">
             <summary>Gets or sets the timestamp of the transaction.</summary>
@@ -210,11 +213,26 @@
         <member name="M:BankingSystem.Migrations.RemoveInterestRate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:BankingSystem.Migrations.MultipleCurrencies">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.MultipleCurrencies.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.MultipleCurrencies.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BankingSystem.Migrations.MultipleCurrencies.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
         <member name="T:MappingProfile">
             <summary>Defines mapping configurations for DTOs and entities.</summary>
         </member>
         <member name="M:MappingProfile.#ctor">
             <summary>Initializes mappings between entities and DTOs.</summary>
+        </member>
+        <member name="M:MappingProfile.FormatBalance(System.Decimal,System.String)">
+            <summary>Handling Amounts and Currencies for Customers.</summary>
         </member>
         <member name="T:AccountService">
             <summary> Using Interface to handel accounts operation </summary>

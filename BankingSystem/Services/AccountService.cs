@@ -17,6 +17,37 @@ public class AccountService : IAccountService
         return random.Next(100000000, 999999999).ToString(); // Generates a 9-digit number
     }
 
+    private static decimal convertCurrency(decimal withdrawalBalance, string currency)
+    {
+        decimal balanceInDollar;
+
+        if (currency == "GBP"){
+            balanceInDollar = withdrawalBalance * 1.26m;
+
+        } else if (currency == "EUR"){
+            balanceInDollar = withdrawalBalance * 1.04m;
+
+        } else if (currency == "CHF"){
+            balanceInDollar = withdrawalBalance * 1.11m;
+
+        } else if (currency == "JPY"){
+            balanceInDollar = withdrawalBalance * 0.0063m;
+
+        } else if (currency == "AED" || currency == "SAR"){
+        balanceInDollar = withdrawalBalance * 0.27m;
+
+        } else if (currency == "JOD"){
+        balanceInDollar = withdrawalBalance * 1.41m;
+        
+        } else if (currency == "CAD"){
+        balanceInDollar = withdrawalBalance * 0.69m;
+            
+        }else{ balanceInDollar = withdrawalBalance;}
+
+    return balanceInDollar;
+    }
+
+
     /// <summary> For using DB and AutoMapper </summary>
     public AccountService(BankingSystemContext dbContext, IMapper mapper)
     {
@@ -32,16 +63,16 @@ public class AccountService : IAccountService
     }
 
 /// <summary>Gets the balance of a specific account.</summary>
-    public async Task<BalanceDto?> GetAccountBalanceAsync(int accountId)
+    public async Task<AccountsDto?> GetAccountBalanceAsync(int accountId)
     {
         var account = await _dbContext.Accounts.FindAsync(accountId);
         if (account == null) return null;
 
-        return _mapper.Map<BalanceDto>(account);
+        return _mapper.Map<AccountsDto>(account);
     }
 
 /// <summary>Creates a new account with a unique 9-digit number.</summary>
-    public async Task<CreateAccountDto> CreateAccountAsync(CreateAccountDto accountDto)
+    public async Task<AccountsDto> CreateAccountAsync(CreateAccountDto accountDto)
     {
         // Generate a unique 9-digit account number
         string accountNumber;
@@ -61,19 +92,25 @@ public class AccountService : IAccountService
         await _dbContext.SaveChangesAsync();
 
         // Map back to DTO and return
-        return _mapper.Map<CreateAccountDto>(newAccount);
+        return _mapper.Map<AccountsDto>(newAccount);
     }
 
 /// <summary>Makes a deposit into an account.</summary>
     public async Task<TransactionDto> MakeDepositAsync(DepositDto depositDto)
     {
+
+
         // Get the Customer's account by his account number
         var account = await _dbContext.Accounts.FirstOrDefaultAsync(a => a.AccountNumber == depositDto.AccountNumber);
 
         // Checking accounts and balance 
         if (account == null) throw new Exception("Account not found.");
         if (depositDto.Balance <= 0) throw new Exception("Deposit amount must be greater than zero.");
+        if (depositDto.Currency == null) throw new Exception("Please add the currency of your amount USD - EUR - GBP ");
         
+        // Converting Currencies to Dollar $
+        decimal balance = convertCurrency(depositDto.Balance, depositDto.Currency);
+
         // Fixed annual interest rate
         const decimal fixedInterestRate = 0.18m; // 18%
 
@@ -97,7 +134,7 @@ public class AccountService : IAccountService
             account.LastInterestCalculated = now;
         }
         // Balance operation
-        account.Balance += depositDto.Balance;
+        account.Balance += balance;
         
         // Create transaction, store it , and update DB
         var transaction = new Transaction
@@ -105,6 +142,7 @@ public class AccountService : IAccountService
             AccountId = account.Id,
             TransactionType = "Deposit",
             Amount = depositDto.Balance,
+            Currency = depositDto.Currency,
             TransactionTime = DateTime.Now,
             Account = account
         };
@@ -125,15 +163,19 @@ public class AccountService : IAccountService
         // Checking accounts and balance 
         if (account == null) throw new Exception("Account not found.");
         if (withdrawalDto.Balance <= 0) throw new Exception("Withdrawal amount must be greater than zero.");
+        if (withdrawalDto.Currency == null) throw new Exception("Please add the currency of your amount USD - EUR - GBP ");
 
-        if (account.AccountType == "CheckingAccount" && withdrawalDto.Balance > account.Balance + 500)
+        // Converting Currencies to Dollar $
+        decimal balance = convertCurrency(withdrawalDto.Balance, withdrawalDto.Currency);
+
+        if (account.AccountType == "CheckingAccount" && balance > account.Balance + 500)
             throw new Exception("Withdrawal exceeds the maximum allowed.");
 
-        if (account.AccountType == "SavingsAccount" && withdrawalDto.Balance > account.Balance)
+        if (account.AccountType == "SavingsAccount" && balance > account.Balance)
             throw new Exception("Withdrawal exceeds the maximum allowed.");
         
         // Balance operation
-        account.Balance -= withdrawalDto.Balance;
+        account.Balance -= balance;
 
         // Create transaction, store it , and update DB
         var transaction = new Transaction
@@ -141,6 +183,7 @@ public class AccountService : IAccountService
             AccountId = account.Id,
             TransactionType = "Withdrawal",
             Amount = withdrawalDto.Balance,
+            Currency = withdrawalDto.Currency,
             TransactionTime = DateTime.Now,
             Account = account
         };
@@ -158,15 +201,19 @@ public class AccountService : IAccountService
         // Get the 2 accounts by the account number
         var senderAccount = await _dbContext.Accounts.FirstOrDefaultAsync(a => a.AccountNumber == transferDto.SenderAccount);
         var receiverAccount = await _dbContext.Accounts.FirstOrDefaultAsync(a => a.AccountNumber == transferDto.ReceiverAccount);
+        if (transferDto.Currency == null) throw new Exception("Please add the currency of your amount USD - EUR - GBP ");
+
+        // Converting Currencies to Dollar $
+        decimal balance = convertCurrency(transferDto.Balance, transferDto.Currency);
 
         // Checking accounts and balance 
         if (senderAccount == null || receiverAccount == null) throw new Exception("Account not found.");
-        if (transferDto.Balance <= 0) throw new Exception("Transfer amount must be greater than zero.");
-        if (senderAccount.Balance < transferDto.Balance) throw new Exception("Insufficient funds.");
+        if (balance <= 0) throw new Exception("Transfer amount must be greater than zero.");
+        if (senderAccount.Balance < balance) throw new Exception("Insufficient funds.");
 
         // Balance operation
-        senderAccount.Balance -= transferDto.Balance;
-        receiverAccount.Balance += transferDto.Balance;
+        senderAccount.Balance -= balance;
+        receiverAccount.Balance += balance;
 
         // Create transaction, store it , and update DB
         var transaction = new Transaction
@@ -174,6 +221,7 @@ public class AccountService : IAccountService
             AccountId = senderAccount.Id,
             TransactionType = "Transfer",
             Amount = transferDto.Balance,
+            Currency = transferDto.Currency,
             TransactionTime = DateTime.Now,
             TransferredTo = receiverAccount.Id,
             Account = senderAccount
