@@ -8,9 +8,7 @@
 - [Setup and Installation](#setup-and-installation)
 - [API Documentation](#api-documentation)
   - [Endpoints](#endpoints)
-- [Usage Examples](#usage-examples)
 - [Database Schema](#database-schema)
-- [Contributing](#contributing)
 - [License](#license)
 
 ---
@@ -32,6 +30,7 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
   - Withdraw funds with validation for account type and available balance.
   - Transfer funds between accounts.
   - Storing each transaction in the database.
+- Interest calculation over time, based on the balance.
 - Automatic database migrations.
 - Comprehensive API documentation.
 
@@ -91,12 +90,14 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
 8. Access the API documentation at:
 
    
-   http://localhost:5122/swagger
+   http://localhost:5122/swagger/index.html
    
 
 ---
 
 ## API Documentation
+
+## You can use it from http://localhost:5122/swagger/index.html
 
 ### Base URL
 
