@@ -93,9 +93,8 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
 
 ### Base URL
 
-```
 http://localhost:<port>/api/accounts
-```
+
 
 ### Endpoints
 
@@ -104,7 +103,7 @@ http://localhost:<port>/api/accounts
 **GET** `/`
 
 - **Response**:
-  ```json
+  json
   {
     "NumberOfAccounts": 2,
     "Data": [
@@ -120,22 +119,22 @@ http://localhost:<port>/api/accounts
       }
     ]
   }
-  ```
+  
 
 #### **2. Create a New Account**
 
 **POST** `/`
 
 - **Request Body**:
-  ```json
+  json
   {
     "AccountNumber": "",
     "AccountType": "SavingsAccount",
     "Balance": 100.5
   }
-  ```
+  
 - **Response**:
-  ```json
+  json
   {
     "Result": "Successful Operation",
     "Data": {
@@ -144,14 +143,14 @@ http://localhost:<port>/api/accounts
       "Balance": 100.5
     }
   }
-  ```
+
 
 #### **3. Get Account Balance**
 
 **GET** `/{id}/balance`
 
 - **Response**:
-  ```json
+  json
   {
     "Result": "Successful Operation",
     "Data": {
@@ -160,21 +159,21 @@ http://localhost:<port>/api/accounts
       "Balance": 1000.5
     }
   }
-  ```
+  
 
 #### **4. Deposit Funds**
 
 **POST** `/deposit`
 
 - **Request Body**:
-  ```json
+  json
   {
     "AccountNumber": "123456789",
     "Balance": 500.0
   }
-  ```
+  
 - **Response**:
-  ```json
+  json
   {
     "Result": "Successful Operation",
     "Data": {
@@ -190,14 +189,14 @@ http://localhost:<port>/api/accounts
 **POST** `/withdrawal`
 
 - **Request Body**:
-  ```json
+  json
   {
     "AccountNumber": "123456789",
     "Balance": 200.0
   }
-  ```
+  
 - **Response**:
-  ```json
+  json
   {
     "Result": "Successful Operation",
     "Data": {
@@ -206,22 +205,22 @@ http://localhost:<port>/api/accounts
       "Balance": 800.5
     }
   }
-  ```
+  
 
 #### **6. Transfer Funds**
 
 **POST** `/transfer`
 
 - **Request Body**:
-  ```json
+  json
   {
     "SenderAccount": "123456789",
     "ReceiverAccount": "987654321",
     "Balance": 100.0
   }
-  ```
+  
 - **Response**:
-  ```json
+  json
   {
     "Result": "Successful Operation",
     "Data": {
@@ -230,7 +229,7 @@ http://localhost:<port>/api/accounts
       "Balance": 100.0
     }
   }
-  ```
+  
 
 ---
 
@@ -239,15 +238,14 @@ http://localhost:<port>/api/accounts
 ### Using Postman or curl
 
 - **Get All Accounts**:
-  ```bash
+  bash
   curl -X GET http://localhost:<port>/api/accounts
-  ```
+  
 - **Create Account**:
-  ```bash
+  bash
   curl -X POST http://localhost:<port>/api/accounts \
       -H "Content-Type: application/json" \
       -d '{"AccountType":"SavingsAccount","Balance":100.00}'
-  ```
 
 ---
 
@@ -286,6 +284,4 @@ http://localhost:<port>/api/accounts
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-```
 
-```
