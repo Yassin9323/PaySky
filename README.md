@@ -59,35 +59,33 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
 
 1. Clone the repository:
 
-   ```bash
+   bash
    git clone <repository-url>
    cd BankingSystem
-   ```
-````
+
 
 2. Install dependencies:
 
-   ```bash
+   bash
    dotnet restore
-   ```
 
 3. Apply database migrations:
 
-   ```bash
+   bash
    dotnet ef database update
-   ```
+   
 
 4. Run the project:
 
-   ```bash
+   bash
    dotnet run
-   ```
+   
 
 5. Access the API documentation at:
 
-   ```
+   
    http://localhost:<port>/swagger
-   ```
+   
 
 ---
 
