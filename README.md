@@ -31,6 +31,7 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
   - Deposit funds into an account.
   - Withdraw funds with validation for account type and available balance.
   - Transfer funds between accounts.
+  - Storing each transaction in the database.
 - Automatic database migrations.
 - Comprehensive API documentation.
 
@@ -60,31 +61,37 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
 1. Clone the repository:
 
    bash
-   git clone <repository-url>
-   cd BankingSystem
+```
+  git clone https://github.com/Yassin9323/PaySky.git
+  cd BankingSystem
+```
 
 
 2. Install dependencies:
 
    bash
+   ```
    dotnet restore
+   ```
 
-3. Apply database migrations:
+4. Apply database migrations:
 
    bash
+   ```
    dotnet ef database update
-   
+   ```
 
-4. Run the project:
+6. Run the project:
 
    bash
+   ```
    dotnet run
-   
+   ```
 
-5. Access the API documentation at:
+8. Access the API documentation at:
 
    
-   http://localhost:<port>/swagger
+   http://localhost:5122/swagger
    
 
 ---
@@ -93,7 +100,7 @@ The Banking System project is a RESTful API built with **ASP.NET Core**, designe
 
 ### Base URL
 
-http://localhost:<port>/api/accounts
+http://localhost:5122/api/accounts
 
 
 ### Endpoints
@@ -105,19 +112,19 @@ http://localhost:<port>/api/accounts
 - **Response**:
   ```json
   {
-    "NumberOfAccounts": 2,
-    "Data": [
-      {
-        "AccountNumber": "123456789",
-        "AccountType": "SavingsAccount",
-        "Balance": 1000.5
-      },
-      {
-        "AccountNumber": "987654321",
-        "AccountType": "CheckingAccount",
-        "Balance": 200.75
-      }
-    ]
+    "number_Of_Accounts": 2,
+    "data": [
+        {
+            "accountNumber": "923141323",
+            "accountType": "CheckingAccount",
+            "balance": 4000.0
+        },
+        {
+            "accountNumber": "769241323",
+            "accountType": "SavingsAccount",
+            "balance": 3899.316
+        }
+  ]
   }
   ```
 
@@ -128,20 +135,18 @@ http://localhost:<port>/api/accounts
 - **Request Body**:
   ```json
   {
-    "AccountNumber": "",
-    "AccountType": "SavingsAccount",
-    "Balance": 100.5
+    "AccountType": "SavingsAccount"
   }
   ```
 - **Response**:
   ```json
   {
-    "Result": "Successful Operation",
-    "Data": {
-      "AccountNumber": "123456789",
-      "AccountType": "SavingsAccount",
-      "Balance": 100.5
-    }
+      "result": "Successful Operation",
+      "data": {
+          "accountNumber": "824435905",
+          "accountType": "SavingsAccount",
+          "balance": 0
+      }
   }
   ```
 
@@ -175,11 +180,11 @@ http://localhost:<port>/api/accounts
 - **Response**:
   ```json
   {
-    "Result": "Successful Operation",
-    "Data": {
-      "AccountNumber": "123456789",
-      "AccountType": "SavingsAccount",
-      "Balance": 1500.5
+    "result": "Successful Operation",
+    "data": {
+        "transactionType": "Deposit",
+        "amount": 1000.00,
+        "transactionTime": "2024-12-29T02:53:42.6166238+02:00"
     }
   }
   ```
@@ -198,11 +203,11 @@ http://localhost:<port>/api/accounts
 - **Response**:
   ```json
   {
-    "Result": "Successful Operation",
-    "Data": {
-      "AccountNumber": "123456789",
-      "AccountType": "SavingsAccount",
-      "Balance": 800.5
+    "result": "Successful Operation",
+    "data": {
+        "transactionType": "Withdrawal",
+        "amount": 400,
+        "transactionTime": "2024-12-29T02:54:38.2445197+02:00"
     }
   }
   ```
@@ -222,29 +227,14 @@ http://localhost:<port>/api/accounts
 - **Response**:
   ```json
   {
-    "Result": "Successful Operation",
-    "Data": {
-      "SenderAccount": "123456789",
-      "ReceiverAccount": "987654321",
-      "Balance": 100.0
-    }
+      "result": "Successful Operation",
+      "data": {
+          "transactionType": "Transfer",
+          "amount": 500.000,
+          "transactionTime": "2024-12-29T02:56:43.8844542+02:00"
+      }
   }
   ```
-
----
-## Usage Examples
-
-### Using Postman or curl
-
-- **Get All Accounts**:
-  bash
-  curl -X GET http://localhost:<port>/api/accounts
-  
-- **Create Account**:
-  bash
-  curl -X POST http://localhost:<port>/api/accounts \
-      -H "Content-Type: application/json" \
-      -d '{"AccountType":"SavingsAccount","Balance":100.00}'
 
 ---
 
@@ -268,14 +258,6 @@ http://localhost:<port>/api/accounts
    - `Amount`: Amount of the transaction
    - `TransactionDate`: Date of the transaction
    - `TransferredTo`: For transfers, the target account number
-
----
-
-## Contributing
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Submit a pull request with detailed changes.
 
 ---
 
