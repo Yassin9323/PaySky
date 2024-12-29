@@ -1,6 +1,3 @@
-Here is the plain text content for your README:
-
-````markdown
 # Banking System
 
 ## Table of Contents
