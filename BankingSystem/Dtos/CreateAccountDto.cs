@@ -4,8 +4,7 @@ namespace BankingSystem.Dtos;
 
 public record class CreateAccountDto
 (
-[Required][StringLength(9)] string AccountNumber,
-[Required] decimal Balance,
-[Required] string AccountType
+[StringLength(9)] string AccountNumber,
+[Required] string AccountType,
+decimal Balance = 0
 );
- 

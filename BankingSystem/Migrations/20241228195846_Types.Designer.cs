@@ -3,6 +3,7 @@ using System;
 using BankingSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingSystem.Migrations
 {
     [DbContext(typeof(BankingSystemContext))]
-    partial class BankingSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20241228195846_Types")]
+    partial class Types
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -57,7 +60,7 @@ namespace BankingSystem.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("TransactionTime")
+                    b.Property<DateTime>("TransactionDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("TransactionType")

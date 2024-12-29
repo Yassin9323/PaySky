@@ -2,9 +2,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BankingSystem.Dtos;
 
-public record class WithdrawlDto
+public record class AccountsDto
 (
 [Required][StringLength(9)] string AccountNumber,
-[Required] decimal Amount
+string AccountType,
+[Required] decimal Balance
+
 );
  

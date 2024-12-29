@@ -4,8 +4,8 @@ namespace BankingSystem.Dtos;
 
 public record class TransferDto
 (
-[Required][StringLength(9)] string AccountNumber,
-[Required][StringLength(9)] string TransferToAccount,
-[Required] decimal Amount
+[Required][StringLength(9)] string SenderAccount,
+[Required][StringLength(9)] string ReceiverAccount,
+[Required] decimal Balance
 );
  

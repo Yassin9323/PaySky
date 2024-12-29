@@ -2,6 +2,8 @@ dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet tool install --global dotnet-ef
+dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection
+
 
 sudo apt install sqlite3
 
